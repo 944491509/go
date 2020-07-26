@@ -31,6 +31,18 @@ func (p person) dream(str string) {
 	fmt.Printf("%s的梦想是%s\n", p.Name, str)
 }
 
+func (p person) year() {
+	p.Age++ // 修改的是p的副本
+}
+
+// 指针接收者
+// 需要修改结构体变量的值时要使用指针接收者
+// 结构体本身比较大，拷贝的内存比较大是也要使用指针接收者
+// 保持一致性：如果有一个方法使用了指针接收者，其他方法为了统一也要使用指针接收者
+func (p *person) age() {
+	p.Age++
+}
+
 func main() {
 	p1 := person{
 		Name: "刘洋",
@@ -54,4 +66,9 @@ func main() {
 	fmt.Println(p3, p4)
 	p1.dream("学好go语言")
 	p2.dream("学好java")
+	fmt.Println(p1.Age)
+	p1.year()
+	fmt.Println(p1.Age)
+	p1.age()
+	fmt.Println(p1.Age)
 }
