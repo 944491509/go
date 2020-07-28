@@ -24,32 +24,33 @@ func (l Logger) enable(LogLevel LogLevel) bool {
 	return LogLevel >= l.Level
 }
 
-func log(lv LogLevel, msg string) {
+func log(lv LogLevel, format string, a ...interface{}) {
+	msg := fmt.Sprintf(format, a...)
 	now := time.Now().Format(timeLayout)
 	funcName, fileName, lineNo := getInfo(3)
 	fmt.Printf("[%s] [%s][%s:%s:%d] %s\n", now, getLogString(lv), fileName, funcName, lineNo, msg)
 }
 
-func (l Logger) Debug(msg string) {
+func (l Logger) Debug(format string, a ...interface{}) {
 	if l.enable(DEBUG) {
-		log(DEBUG, msg)
+		log(DEBUG, format, a...)
 	}
 }
 
-func (l Logger) Info(msg string) {
+func (l Logger) Info(format string, a ...interface{}) {
 	if l.enable(INFO) {
-		log(INFO, msg)
+		log(INFO, format, a...)
 	}
 }
 
-func (l Logger) Waring(msg string) {
+func (l Logger) Waring(format string, a ...interface{}) {
 	if l.enable(WARNING) {
-		log(WARNING, msg)
+		log(WARNING, format, a...)
 	}
 }
 
-func (l Logger) Error(msg string) {
+func (l Logger) Error(format string, a ...interface{}) {
 	if l.enable(ERROR) {
-		log(ERROR, msg)
+		log(ERROR, format, a...)
 	}
 }
