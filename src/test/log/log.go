@@ -6,7 +6,9 @@ import (
 )
 
 func main() {
-	log := myloger.NewLog("INFO")
+	//log := myloger.NewLog("INFO")
+	day := time.Now().Format("2006-01-02")
+	log := myloger.NewFileLogger("INFO", "./Runtime/", day, 10*1024*1024)
 	for {
 		log.Debug("我是Debug日志")
 		log.Info("我是Info日志")

@@ -8,49 +8,43 @@ import (
 // 往终端写日志的相关内容
 
 // Logger日志结构体
-type Logger struct {
+type ConsoleLogger struct {
 	Level LogLevel
 }
 
 // NewLog的构造函数
-func NewLog(levelStr string) Logger {
+func NewLog(levelStr string) ConsoleLogger {
 	level := parseLevel(levelStr)
-	return Logger{
+	return ConsoleLogger{
 		Level: level,
 	}
 }
 
-func (l Logger) enable(LogLevel LogLevel) bool {
-	return LogLevel >= l.Level
+func (c ConsoleLogger) enable(LogLevel LogLevel) bool {
+	return LogLevel >= c.Level
 }
 
-func log(lv LogLevel, format string, a ...interface{}) {
-	msg := fmt.Sprintf(format, a...)
-	now := time.Now().Format(timeLayout)
-	funcName, fileName, lineNo := getInfo(3)
-	fmt.Printf("[%s] [%s][%s:%s:%d] %s\n", now, getLogString(lv), fileName, funcName, lineNo, msg)
-}
-
-func (l Logger) Debug(format string, a ...interface{}) {
-	if l.enable(DEBUG) {
-		log(DEBUG, format, a...)
+func (c ConsoleLogger) log(lv LogLevel, format string, a ...interface{}) {
+	if c.enable(lv) {
+		msg := fmt.Sprintf(format, a...)
+		now := time.Now().Format(timeLayout)
+		funcName, fileName, lineNo := getInfo(3)
+		fmt.Printf("[%s] [%s][%s:%s:%d] %s\n", now, getLogString(lv), fileName, funcName, lineNo, msg)
 	}
 }
 
-func (l Logger) Info(format string, a ...interface{}) {
-	if l.enable(INFO) {
-		log(INFO, format, a...)
-	}
+func (c ConsoleLogger) Debug(format string, a ...interface{}) {
+	c.log(DEBUG, format, a...)
 }
 
-func (l Logger) Waring(format string, a ...interface{}) {
-	if l.enable(WARNING) {
-		log(WARNING, format, a...)
-	}
+func (c ConsoleLogger) Info(format string, a ...interface{}) {
+	c.log(INFO, format, a...)
 }
 
-func (l Logger) Error(format string, a ...interface{}) {
-	if l.enable(ERROR) {
-		log(ERROR, format, a...)
-	}
+func (c ConsoleLogger) Waring(format string, a ...interface{}) {
+	c.log(WARNING, format, a...)
+}
+
+func (c ConsoleLogger) Error(format string, a ...interface{}) {
+	c.log(ERROR, format, a...)
 }
