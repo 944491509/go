@@ -17,22 +17,22 @@ var (
 
 func read() {
 	defer wg.Done()
-	lock.Lock()
-	//rwlock.RLock()
+	//lock.Lock()
+	rwlock.RLock()
 	fmt.Println(x)
 	time.Sleep(time.Millisecond)
-	lock.Unlock()
-	//rwlock.RUnlock()
+	//lock.Unlock()
+	rwlock.RUnlock()
 }
 
 func write() {
 	defer wg.Done()
-	lock.Lock()
-	//rwlock.Lock()
+	//lock.Lock()
+	rwlock.Lock()
 	x = x + 1
 	time.Sleep(time.Millisecond * 5)
-	lock.Unlock()
-	//rwlock.Unlock()
+	//lock.Unlock()
+	rwlock.Unlock()
 }
 
 func main() {
