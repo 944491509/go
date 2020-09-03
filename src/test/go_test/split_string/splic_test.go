@@ -23,3 +23,12 @@ func Test2Split(t *testing.T) {
 		t.Errorf("want:%v but got:%v\n", want, got)
 	}
 }
+
+func Test3Split(t *testing.T) {
+	got := Split("abcedsbcasd", "bc")
+	want := []string{"a", "eds", "asd"}
+	if !reflect.DeepEqual(got, want) {
+		// 测试失败
+		t.Errorf("want:%v but got:%v\n", want, got)
+	}
+}
