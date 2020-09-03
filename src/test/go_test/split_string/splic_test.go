@@ -27,6 +27,8 @@ func TestSplit(t *testing.T) {
 	}
 
 	// go test -run=TestSplit/test4  单独跑一个测试的命令
+	// go test cover -html=cover.out 生成文件
+	// go tool cover -html=cover.out 查看文件
 	for _, tc := range testGroup {
 		got := Split(tc.str, tc.sep)
 		if !reflect.DeepEqual(tc.want, got) {
